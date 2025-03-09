@@ -17,7 +17,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 import uvicorn
-
+from pathlib import Path
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
@@ -37,7 +37,7 @@ PROMPT_TEMPLATE_TXT_SYS = "prompt_template_system.txt"
 PROMPT_TEMPLATE_TXT_USER = "prompt_template_user.txt"
 
 # openai:调用gpt模型,oneapi:调用oneapi方案支持的模型,ollama:调用本地开源大模型,qwen:调用阿里通义千问大模型
-llm_type = "ollama"
+llm_type = "deepseek"
 
 # API服务设置相关
 PORT = 8012
@@ -195,9 +195,12 @@ async def chat_completions(request: ChatCompletionRequest):
 
         config = {"configurable": {"thread_id": request.userId+"@@"+request.conversationId}}
         logger.info(f"用户当前会话信息: {config}")
-
-        prompt_template_system = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_SYS)
-        prompt_template_user = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_USER)
+        # prompt_template_system = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_SYS)
+        # prompt_template_user = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_USER)
+        template_sys = Path(PROMPT_TEMPLATE_TXT_SYS).read_text(encoding='utf-8')
+        prompt_template_system = PromptTemplate.from_template(template_sys)
+        template_user = Path(PROMPT_TEMPLATE_TXT_USER).read_text(encoding='utf-8')
+        prompt_template_user = PromptTemplate.from_template(template_user)
         prompt = [
             {"role": "system", "content": prompt_template_system.template},
             {"role": "user", "content": prompt_template_user.template.format(query=query_prompt)}

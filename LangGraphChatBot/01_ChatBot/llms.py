@@ -2,6 +2,9 @@ import os
 from langchain_openai import ChatOpenAI
 from typing import Optional
 import logging
+# added
+from langchain_deepseek import ChatDeepSeek
+
 
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
@@ -16,12 +19,12 @@ logger = logging.getLogger(__name__)
 MODEL_CONFIGS = {
     "openai": {
         "base_url": "https://yunwu.ai/v1",
-        "api_key": "sk-rmfPKCQYU7yWyX2RDideh1IggooRo8PVh8A42e3wL5zOFxKF",
+        "api_key": "sk-nvKgSev1vvwesCz7UnqP8KNeqzdUuBHsa8CyZgo8sE0obHSw",
         "model": "gpt-4o-mini"
     },
     "oneapi": {
         "base_url": "http://139.224.72.218:3000/v1",
-        "api_key": "sk-ROhn6RNxulVXhlkZ0713F29093Ea49AcAcA29b96125aF1Ff",
+        "api_key": "sk-3GzmS0DGVOmfIVzfC5Bc2fE3DcC347A78cB670A5A273B3C8",
         "model": "qwen-max"
     },
     "qwen": {
@@ -32,13 +35,18 @@ MODEL_CONFIGS = {
     "ollama": {
         "base_url": "http://localhost:11434/v1",
         "api_key": "ollama",
-        "model": "deepseek-r1:14b"
+        "model": "deepseek-r1:1.5b"
+    },
+    "deepseek": {
+        "base_url": "https://api.deepseek.com/v1",
+        "api_key": "sk-2b4fd94555494d6c85e6967685cb524f",
+        "model": "deepseek-chat"
     }
 }
 
 
 # 默认配置
-DEFAULT_LLM_TYPE = "openai"
+DEFAULT_LLM_TYPE = "ollama"
 DEFAULT_TEMPERATURE = 0.7
 
 
@@ -72,14 +80,25 @@ def initialize_llm(llm_type: str = DEFAULT_LLM_TYPE) -> Optional[ChatOpenAI]:
             os.environ["OPENAI_API_KEY"] = "NA"
 
         # 创建LLM实例
-        llm = ChatOpenAI(
-            base_url=config["base_url"],
-            api_key=config["api_key"],
-            model=config["model"],
-            temperature=DEFAULT_TEMPERATURE,
-            timeout=30,  # 添加超时配置（秒）
-            max_retries=2  # 添加重试次数
-        )
+        if (llm_type != "deepseek"):
+            llm = ChatOpenAI(
+                base_url=config["base_url"],
+                api_key=config["api_key"],
+                model=config["model"],
+                temperature=DEFAULT_TEMPERATURE,
+                timeout=30,  # 添加超时配置（秒）
+                max_retries=2  # 添加重试次数
+            )
+        else:
+            llm = ChatDeepSeek(
+                model=config["model"],
+                temperature=0,
+                max_tokens=None,
+                timeout=None,
+                max_retries=2,
+                api_key=config["api_key"],
+                # other params...
+            )
 
         logger.info(f"成功初始化 {llm_type} LLM")
         return llm
