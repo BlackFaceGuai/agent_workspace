@@ -18,16 +18,16 @@ from psycopg_pool import ConnectionPool
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 import uvicorn
-
-
+# added
+from pathlib import Path
 
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
 
 # 设置LangSmith环境变量 进行应用跟踪，实时了解应用中的每一步发生了什么
-# os.environ["LANGCHAIN_TRACING_V2"] = "true"
-# os.environ["LANGCHAIN_API_KEY"] = "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"
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"] = "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"
 
 
 # 设置日志模版
@@ -178,7 +178,7 @@ async def lifespan(app: FastAPI):
         # 初始化 LLM
         llm, embedding = get_llm(llm_type)
         # 创建数据库连接池
-        DB_URI = "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+        DB_URI = "postgresql://postgres:admin@localhost:5432/postgres?sslmode=disable"
         connection_kwargs = {
             "autocommit": True,
             "prepare_threshold": 0,
@@ -241,8 +241,12 @@ async def chat_completions(request: ChatCompletionRequest):
         config = {"configurable": {"thread_id": request.userId+"@@"+request.conversationId, "user_id": request.userId}}
         logger.info(f"用户当前会话信息: {config}")
 
-        prompt_template_system = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_SYS)
-        prompt_template_user = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_USER)
+        # prompt_template_system = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_SYS)
+        # prompt_template_user = PromptTemplate.from_file(PROMPT_TEMPLATE_TXT_USER)
+        template_sys = Path(PROMPT_TEMPLATE_TXT_SYS).read_text(encoding='utf-8')
+        prompt_template_system = PromptTemplate.from_template(template_sys)
+        template_user = Path(PROMPT_TEMPLATE_TXT_USER).read_text(encoding='utf-8')
+        prompt_template_user = PromptTemplate.from_template(template_user)
         prompt = [
             {"role": "system", "content": prompt_template_system.template},
             {"role": "user", "content": prompt_template_user.template.format(query=query_prompt)}

@@ -54,7 +54,7 @@ def create_graph(llm_type: str, pool) -> StateGraph:
             # 获取state中的消息进行消息过滤后存储新的记忆
             last_message = state["messages"][-1]
             if "记住" in last_message.content.lower():
-                memory = "我的频道是南哥AGI研习社。"
+                memory = "我的频道是LeZiAGI研习社。"
                 store.put(namespace, str(uuid.uuid4()), {"data": memory})
             # 2、短期记忆逻辑 进行消息过滤
             messages = filter_messages(state["messages"])
@@ -104,7 +104,7 @@ def stream_response(graph: StateGraph, user_input: str, config) -> None:
 def main():
     try:
         # 创建数据库连接池
-        DB_URI = "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+        DB_URI = "postgresql://postgres:admin@localhost:5432/postgres?sslmode=disable"
         connection_kwargs = {
             "autocommit": True,
             "prepare_threshold": 0,
@@ -125,7 +125,7 @@ def main():
 
     # 测试1
     # config = {"configurable": {"thread_id": "1", "user_id": "1"}}
-    # input_message = {"role": "user", "content": "记住：我的频道是南哥AGI研习社"}
+    # input_message = {"role": "user", "content": "记住：我的频道是行道AGI研习社"}
     # for chunk in graph.stream({"messages": [input_message]}, config, stream_mode="values"):
     #     chunk["messages"][-1].pretty_print()
 

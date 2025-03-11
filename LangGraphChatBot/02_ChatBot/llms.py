@@ -3,7 +3,8 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_openai import ChatOpenAI,OpenAIEmbeddings
 from typing import Optional
 import logging
-
+# added
+from langchain_deepseek import ChatDeepSeek
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
@@ -17,27 +18,27 @@ logger = logging.getLogger(__name__)
 MODEL_CONFIGS = {
     "openai": {
         "base_url": "https://yunwu.ai/v1",
-        "api_key": "sk-3QztQa9rwwKc9MjkgjtnK0GjTdtnVjDkEswHcX0uEm5uQB1E",
+        "api_key": "sk-gGtASSF6pjcYMEbdIYZLeyLSSTq7UguURFwPrPbP6caQSGRz",
         "chat_model": "gpt-4o-mini",
         "embedding_model": "text-embedding-3-small"
 
     },
     "oneapi": {
         "base_url": "http://139.224.72.218:3000/v1",
-        "api_key": "sk-EDjbeeCYkD1OnI9E48018a018d2d4f44958798A261137591",
+        "api_key": "sk-3GzmS0DGVOmfIVzfC5Bc2fE3DcC347A78cB670A5A273B3C8",
         "chat_model": "qwen-max",
         "embedding_model": "text-embedding-v1"
     },
     "qwen": {
         "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "api_key": "sk-80a72f794bc4488d85798d590e96db43",
+        "api_key": "sk-5cee351038c943648971907366eabafe",
         "chat_model": "qwen-max",
         "embedding_model": "text-embedding-v1"
     },
     "ollama": {
         "base_url": "http://localhost:11434/v1",
         "api_key": "ollama",
-        "chat_model": "deepseek-r1:14b",
+        "chat_model": "deepseek-r1:1.5b",
         "embedding_model": "nomic-embed-text:latest"
     }
 }

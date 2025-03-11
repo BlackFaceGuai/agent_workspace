@@ -19,7 +19,7 @@ headers = {"Content-Type": "application/json"}
 stream_flag = False
 
 
-input_text = "记住你的名字是南哥。"
+# input_text = "记住你的名字是你大爷。"
 # input_text = "200元以下，流量大的套餐有啥？"
 # input_text = "你叫什么名字？"
 # input_text = "就刚刚提到的这个套餐，是多少钱？"
@@ -27,12 +27,12 @@ input_text = "记住你的名字是南哥。"
 # input_text = "你叫什么名字？"
 
 
-# input_text = "你的名字是南哥。"
-# input_text = "200元以下，流量大的套餐有啥？"
-# input_text = "你叫什么名字？"
-# input_text = "就刚刚提到的这个套餐，是多少钱？"
-# input_text = "有没有豪华套餐？"
-# input_text = "你叫什么名字？"
+input_text = "我的名字是布拉迪。"
+input_text = "我叫什么名字？"
+input_text = "200元以下，流量大的套餐有啥？"
+input_text = "就刚刚提到的这个套餐，是多少钱？"
+input_text = "有没有豪华套餐？"
+input_text = "我叫什么名字？"
 
 
 # 封装请求的参数

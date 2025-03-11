@@ -19,7 +19,7 @@ headers = {"Content-Type": "application/json"}
 stream_flag = False
 
 
-# input_text = "记住你的名字是南哥。"
+# input_text = "记住你的名字是思思。"
 # input_text = "200元以下，流量大的套餐有啥？"
 # input_text = "你叫什么名字？"
 # input_text = "就刚刚提到的这个套餐，是多少钱？"
@@ -27,7 +27,7 @@ stream_flag = False
 # input_text = "你叫什么名字？"
 
 
-input_text = "你的名字是南哥。"
+input_text = "你的名字是思思。"
 # input_text = "200元以下，流量大的套餐有啥？"
 # input_text = "你叫什么名字？"
 # input_text = "就刚刚提到的这个套餐，是多少钱？"
